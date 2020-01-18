@@ -4,19 +4,27 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.lang.ref.Cleaner;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 public class KorisniciModel {
     private ObservableList<Korisnik> korisnici = FXCollections.observableArrayList();
     private SimpleObjectProperty<Korisnik> trenutniKorisnik = new SimpleObjectProperty<>();
+    private KorisnikDAO konekcija;
 
     public KorisniciModel() {
+        if(!Files.exists(Paths.get("korisnici.db"))) KorisnikDAO.generisiBazu();
+        konekcija = KorisnikDAO.getInstance();
     }
 
     public void napuni() {
-        korisnici.add(new Korisnik("Vedran", "Ljubović", "vljubovic@etf.unsa.ba", "vedranlj", "test"));
-        korisnici.add(new Korisnik("Amra", "Delić", "adelic@etf.unsa.ba", "amrad", "test"));
-        korisnici.add(new Korisnik("Tarik", "Sijerčić", "tsijercic1@etf.unsa.ba", "tariks", "test"));
-        korisnici.add(new Korisnik("Rijad", "Fejzić", "rfejzic1@etf.unsa.ba", "rijadf", "test"));
+        korisnici.addAll(konekcija.getKorisnici());
         trenutniKorisnik.set(null);
+    }
+
+    public void diskonektuj() {
+        KorisnikDAO.removeInstance();
     }
 
     public ObservableList<Korisnik> getKorisnici() {
@@ -36,10 +44,16 @@ public class KorisniciModel {
     }
 
     public void setTrenutniKorisnik(Korisnik trenutniKorisnik) {
+        if(this.trenutniKorisnik.getValue() != null) konekcija.updateuj(this.trenutniKorisnik.getValue());
         this.trenutniKorisnik.set(trenutniKorisnik);
     }
 
     public void setTrenutniKorisnik(int i) {
         this.trenutniKorisnik.set(korisnici.get(i));
+    }
+
+    public void obrisiTrenutnog() {
+        konekcija.obrisi(trenutniKorisnik.getValue());
+        korisnici.remove(trenutniKorisnik.getValue());
     }
 }

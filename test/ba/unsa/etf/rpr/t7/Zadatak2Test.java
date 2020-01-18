@@ -1,4 +1,4 @@
-/*package ba.unsa.etf.rpr.t7;
+package ba.unsa.etf.rpr.t7;
 
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
@@ -82,4 +82,3 @@ public class Zadatak2Test {
         assertEquals("Rijad", polje.getText());
     }
 }
-*/

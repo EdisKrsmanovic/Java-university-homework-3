@@ -1,4 +1,4 @@
-/*package ba.unsa.etf.rpr.t7;
+package ba.unsa.etf.rpr.t7;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -58,12 +58,11 @@ public class Zadatak1Test {
                 korisnikUpit.execute();
                 conn.close();
             } catch (SQLException e) {
-                fail("Tabela korisnik ne postoji u bazi");
+                e.printStackTrace();
             }
         } catch (SQLException e) {
             fail("Datoteka sa bazom ne postoji ili je nedostupna");
         }
-
     }
 
     @Test
@@ -83,6 +82,7 @@ public class Zadatak1Test {
                 assertEquals("Tarikbbb", ime);
                 conn.close();
             } catch (SQLException e) {
+                e.printStackTrace();
                 fail("Nije uspio upit na korisnika sa prezimenom 'Sijerčić'");
             }
         } catch (SQLException e) {
@@ -113,4 +113,3 @@ public class Zadatak1Test {
         }
     }
 }
-*/

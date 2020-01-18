@@ -111,4 +111,10 @@ public class KorisnikController {
     public void krajAction(ActionEvent actionEvent) {
         System.exit(0);
     }
+
+    public void obrisiAction(ActionEvent actionEvent) {
+        model.obrisiTrenutnog();
+        listKorisnici.refresh();
+//        listKorisnici.getSelectionModel().selectFirst();
+    }
 }
