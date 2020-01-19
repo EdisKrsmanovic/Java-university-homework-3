@@ -2,6 +2,7 @@ package ba.unsa.etf.rpr.t7;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.testfx.framework.junit5.Start;
 
 import java.io.File;
 

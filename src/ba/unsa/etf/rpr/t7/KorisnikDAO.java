@@ -35,10 +35,7 @@ public class KorisnikDAO {
     private KorisnikDAO() {
         try {
 
-            File dbfile = new File("korisnici.db");
-            dbfile.delete();
-            generisiBazu();
-            konekcija = DriverManager.getConnection("jdbc:sqlite:korisnici.db");
+            regenerisiBazu();
 
             PreparedStatement stmt = konekcija.prepareStatement("SELECT * FROM korisnik");
             ResultSet rs = stmt.executeQuery();
@@ -51,11 +48,16 @@ public class KorisnikDAO {
         }
     }
 
+    public void regenerisiBazu() {
+        File dbfile = new File("korisnici.db");
+        dbfile.delete();
+        generisiBazu();
+    }
+
 
     public Collection<Korisnik> getKorisnici() {
         return korisnici.values();
     }
-
 
     public static void generisiBazu() {
         try {
@@ -99,9 +101,28 @@ public class KorisnikDAO {
             PreparedStatement stmt = konekcija.prepareStatement("DELETE FROM korisnik WHERE id = ?");
             stmt.setInt(1, korisnik.getId());
             stmt.execute();
+
+            korisnici.remove(korisnik.getUsername());
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
+    }
+
+    public void refreshKorisnici() {
+        PreparedStatement stmt = null;
+        try {
+            korisnici.clear();
+            stmt = konekcija.prepareStatement("SELECT * FROM korisnik");
+
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Korisnik korisnik = new Korisnik(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6));
+                korisnici.put(korisnik.getUsername(), korisnik);
+            }
+        } catch (SQLException e) {
+
+
+        }
     }
 }

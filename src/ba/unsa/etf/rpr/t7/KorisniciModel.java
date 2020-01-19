@@ -14,8 +14,9 @@ public class KorisniciModel {
     private KorisnikDAO konekcija;
 
     public KorisniciModel() {
-        if(!Files.exists(Paths.get("korisnici.db"))) KorisnikDAO.generisiBazu();
+        if(!Files.exists(Paths.get("korisnici.db"))) KorisnikDAO.removeInstance();
         konekcija = KorisnikDAO.getInstance();
+        konekcija.refreshKorisnici();
     }
 
     public void napuni() {
