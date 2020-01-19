@@ -4,8 +4,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.lang.ref.Cleaner;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -13,17 +12,14 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class KorisniciModel {
     private ObservableList<Korisnik> korisnici = FXCollections.observableArrayList();
     private SimpleObjectProperty<Korisnik> trenutniKorisnik = new SimpleObjectProperty<>();
-    //    private KorisnikDAO konekcija;
     private Connection konekcija;
 
     public KorisniciModel() {
-//        if(!Files.exists(Paths.get("korisnici.db"))) KorisnikDAO.removeInstance();
-//        konekcija = KorisnikDAO.getInstance();
-//        konekcija.refreshKorisnici();
         if (!Files.exists(Paths.get("korisnici.db"))) {
             regenerisiBazu();
         } else {
@@ -76,6 +72,19 @@ public class KorisniciModel {
     public void obrisiTrenutnog() {
         obrisi(trenutniKorisnik.getValue());
         korisnici.remove(trenutniKorisnik.getValue());
+    }
+
+    public void zapisiDatoteku(File file) {
+        try {
+            if (file != null) {
+                FileWriter fileWriter = new FileWriter(file);
+                String stringKorisnici = uzmiKorisnike().stream().map(Korisnik::passwdFormat).collect(Collectors.joining("\n"));
+                fileWriter.write(stringKorisnici);
+                fileWriter.close();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private List<Korisnik> uzmiKorisnike() {
@@ -142,5 +151,9 @@ public class KorisniciModel {
         } catch (FileNotFoundException | SQLException e) {
             System.out.println(String.format("Greska pri generisanju baze: %s", e.getMessage()));
         }
+    }
+
+    public Connection getConn() {
+        return konekcija;
     }
 }

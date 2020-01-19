@@ -6,6 +6,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.util.ResourceBundle;
+
 import static javafx.scene.layout.Region.USE_COMPUTED_SIZE;
 
 
@@ -17,7 +19,9 @@ public class Main extends Application {
         model.napuni();
         KorisnikController ctrl = new KorisnikController(model);
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/korisnici.fxml"));
+        ResourceBundle bundle = ResourceBundle.getBundle("language");
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/korisnici.fxml"), bundle);
         loader.setController(ctrl);
         Parent root = loader.load();
         primaryStage.setTitle("Korisnici");

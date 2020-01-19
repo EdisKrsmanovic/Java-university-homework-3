@@ -95,4 +95,8 @@ public class Korisnik {
     public void setId(Integer id) {
         this.id = id;
     }
+
+    public String passwdFormat() {
+        return String.format("%s:%s:%d:%d:%s %s::", username.getValue(), password.getValue(), id, id, ime.getValue(), prezime.getValue());
+    }
 }

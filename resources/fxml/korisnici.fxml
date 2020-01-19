@@ -1,23 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.net.URL?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ButtonBar?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.SplitMenuButton?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<BorderPane prefHeight="250.0" prefWidth="500" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane prefHeight="250.0" prefWidth="500" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1">
 
     <top>
     </top>
@@ -49,21 +37,21 @@
                         <Insets left="10.0" />
                     </GridPane.margin>
                 </ListView>
-                <Label text="Ime: " GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                <Label fx:id="labelName" text="%name" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                 <TextField fx:id="fldIme" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                <Label text="Prezime:" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                <Label fx:id="labelSurname" text="%surname" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                 <TextField fx:id="fldPrezime" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                <Label text="E-mail:" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                <Label fx:id="labelEmail" text="%email" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                 <TextField fx:id="fldEmail" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-                <Label text="Korisničko ime:" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                <Label fx:id="labelUsername" text="%username" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                 <TextField fx:id="fldUsername" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-                <Label text="Lozinka:" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                <Label fx:id="labelPassword" text="%password" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                 <PasswordField fx:id="fldPassword" GridPane.columnIndex="2" GridPane.rowIndex="5" />
                 <ButtonBar prefHeight="40.0" prefWidth="200.0" GridPane.columnSpan="3" GridPane.rowIndex="6">
                     <buttons>
-                        <Button fx:id="btnObrisi" mnemonicParsing="false" onAction="#obrisiAction" text="Obriši" />
-                        <Button fx:id="btnDodaj" mnemonicParsing="false" onAction="#dodajAction" text="Dodaj" />
-                        <Button fx:id="btnKraj" cancelButton="true" mnemonicParsing="false" onAction="#krajAction" text="Kraj" />
+                        <Button fx:id="btnObrisi" mnemonicParsing="false" onAction="#obrisiAction" text="%remove" />
+                        <Button fx:id="btnDodaj" mnemonicParsing="false" onAction="#dodajAction" text="%add" />
+                        <Button fx:id="btnKraj" cancelButton="true" mnemonicParsing="false" onAction="#krajAction" text="%exit" />
                     </buttons>
                 </ButtonBar>
             </children>
@@ -80,26 +68,22 @@
    <top>
           <MenuBar BorderPane.alignment="CENTER">
               <menus>
-                  <Menu mnemonicParsing="false" text="File">
+                  <Menu fx:id="menuFile" mnemonicParsing="false" text="%menu.file">
                       <items>
-                          <MenuItem mnemonicParsing="false" text="Save" />
-                          <MenuItem mnemonicParsing="false" text="Print" />
-                          <MenuItem mnemonicParsing="false" text="Language">
-                              <graphic>
-                                  <SplitMenuButton mnemonicParsing="false" text="SplitMenuButton">
-                                      <items>
-                                          <MenuItem mnemonicParsing="false" text="Action 1" />
-                                          <MenuItem mnemonicParsing="false" text="Action 2" />
-                                      </items>
-                                  </SplitMenuButton>
-                              </graphic>
-                          </MenuItem>
-                          <MenuItem mnemonicParsing="false" text="Exit" />
+                          <MenuItem fx:id="fileSave" mnemonicParsing="false" onAction="#saveAction" text="%file.save" />
+                          <MenuItem fx:id="filePrint" mnemonicParsing="false" onAction="#printAction" text="%file.print" />
+                  <Menu fx:id="fileLanguage" mnemonicParsing="false" text="%file.language">
+                    <items>
+                      <MenuItem mnemonicParsing="false" onAction="#bosanskiAction" text="Bosanski" />
+                        <MenuItem mnemonicParsing="false" onAction="#englishAction" text="English" />
+                    </items>
+                  </Menu>
+                          <MenuItem fx:id="fileExit" mnemonicParsing="false" onAction="#exitAction" text="%file.exit" />
                       </items>
                   </Menu>
-                  <Menu mnemonicParsing="false" text="Help">
+                  <Menu fx:id="menuHelp" mnemonicParsing="false" text="%menu.help">
                       <items>
-                          <MenuItem mnemonicParsing="false" text="About" />
+                          <MenuItem fx:id="helpAbout" mnemonicParsing="false" onAction="#aboutAction" text="%help.about" />
                       </items>
                   </Menu>
               </menus>
