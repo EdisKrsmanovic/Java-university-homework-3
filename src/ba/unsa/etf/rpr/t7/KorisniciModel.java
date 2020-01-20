@@ -114,8 +114,8 @@ public class KorisniciModel {
             stmt.setString(3, korisnik.getEmail());
             stmt.setString(4, korisnik.getUsername());
             stmt.setString(5, korisnik.getPassword());
-            stmt.setInt(6, korisnik.getId());
-            stmt.setString(7, korisnik.getSlika());
+            stmt.setString(6, korisnik.getSlika());
+            stmt.setInt(7, korisnik.getId());
             stmt.execute();
             stmt.close();
         } catch (SQLException e) {
