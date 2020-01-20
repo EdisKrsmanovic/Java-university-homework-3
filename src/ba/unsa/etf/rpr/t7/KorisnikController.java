@@ -80,13 +80,12 @@ public class KorisnikController {
                 fldUsername.textProperty().unbindBidirectional(oldKorisnik.usernameProperty());
                 fldPassword.textProperty().unbindBidirectional(oldKorisnik.passwordProperty());
 
-//                ImageView img = new ImageView(newKorisnik.getSlika());
-//                img.setFitWidth(128);
-//                img.setFitHeight(128);
-//                imgKorisnik.setGraphic(img);
+                ImageView img = new ImageView(newKorisnik.getSlika());
+                img.setFitWidth(128);
+                img.setFitHeight(128);
+                imgKorisnik.setGraphic(img);
             }
             if (newKorisnik == null) {
-                System.out.println("bbb");
                 fldIme.setText("");
                 fldPrezime.setText("");
                 fldEmail.setText("");
