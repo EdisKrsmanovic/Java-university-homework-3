@@ -1,4 +1,4 @@
-/*package ba.unsa.etf.rpr.t7;
+package ba.unsa.etf.rpr.t7;
 
 import org.junit.jupiter.api.Test;
 import org.testfx.api.FxRobot;
@@ -16,7 +16,7 @@ public class Zadatak7Test {
     @Test
     void testBazaDirekt() {
         // Provjeravamo direktno u bazi da li postoji kolona slika
-        File dbfile = new File("baza.db");
+        File dbfile = new File("korisnici.db");
         dbfile.delete();
 
         {
@@ -59,6 +59,7 @@ public class Zadatak7Test {
             Korisnik drugi = model.getKorisnici().get(1);
             model.setTrenutniKorisnik(prvi);
             prvi.setSlika("https://zamger.etf.unsa.ba/static/images/etf-50x50.png");
+            prvi.setIme("konj");
             // Promjena trenutnog korisnika bi trebala izvršiti ažuriranje baze
             model.setTrenutniKorisnik(drugi);
         }
@@ -66,8 +67,8 @@ public class Zadatak7Test {
             KorisniciModel model = new KorisniciModel();
             model.napuni();
             Korisnik prvi = model.getKorisnici().get(0);
+            model.getKorisnici().forEach(e -> System.out.println(e + " " + e.getId() + " " + e.getSlika()));
             assertEquals("https://zamger.etf.unsa.ba/static/images/etf-50x50.png", prvi.getSlika());
         }
     }
 }
- */

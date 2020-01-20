@@ -4,6 +4,7 @@ import javafx.beans.property.SimpleStringProperty;
 
 public class Korisnik {
     private Integer id;
+    private String slika;
     private SimpleStringProperty ime, prezime, email, username, password;
 
     public Korisnik(String ime, String prezime, String email, String username, String password) {
@@ -14,13 +15,14 @@ public class Korisnik {
         this.password = new SimpleStringProperty(password);
     }
 
-    public Korisnik(Integer id, String ime, String prezime, String email, String username, String password) {
+    public Korisnik(Integer id, String ime, String prezime, String email, String username, String password, String imgUrl) {
         this.id = id;
         this.ime = new SimpleStringProperty(ime);
         this.prezime = new SimpleStringProperty(prezime);
         this.email = new SimpleStringProperty(email);
         this.username = new SimpleStringProperty(username);
         this.password = new SimpleStringProperty(password);
+        this.slika = imgUrl;
     }
 
     @Override
@@ -94,6 +96,14 @@ public class Korisnik {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getSlika() {
+        return slika;
+    }
+
+    public void setSlika(String slika) {
+        this.slika = slika;
     }
 
     public String passwdFormat() {

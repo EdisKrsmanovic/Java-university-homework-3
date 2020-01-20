@@ -3,7 +3,9 @@ package ba.unsa.etf.rpr.t7;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Group;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -11,23 +13,18 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Priority;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
-import javafx.scene.web.WebEngine;
-import javafx.scene.web.WebView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import net.sf.jasperreports.engine.JRException;
 
-import java.awt.*;
 import java.io.File;
 import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.Locale;
 import java.util.ResourceBundle;
+
+import static javafx.scene.layout.Region.USE_COMPUTED_SIZE;
 
 public class KorisnikController {
     public TextField fldIme;
@@ -40,6 +37,7 @@ public class KorisnikController {
     public Button btnObrisi;
     public Button btnDodaj;
     public Button btnKraj;
+    public Button imgKorisnik;
 
     public Menu menuFile;
     public Menu menuHelp;
@@ -69,6 +67,11 @@ public class KorisnikController {
             listKorisnici.refresh();
         });
 
+        ImageView imageView = new ImageView("/img/face-smile.png");
+        imageView.setFitWidth(128);
+        imageView.setFitHeight(128);
+        imgKorisnik.setGraphic(imageView);
+
         model.trenutniKorisnikProperty().addListener((obs, oldKorisnik, newKorisnik) -> {
             if (oldKorisnik != null) {
                 fldIme.textProperty().unbindBidirectional(oldKorisnik.imeProperty());
@@ -76,19 +79,35 @@ public class KorisnikController {
                 fldEmail.textProperty().unbindBidirectional(oldKorisnik.emailProperty());
                 fldUsername.textProperty().unbindBidirectional(oldKorisnik.usernameProperty());
                 fldPassword.textProperty().unbindBidirectional(oldKorisnik.passwordProperty());
+
+                ImageView img = new ImageView(newKorisnik.getSlika());
+                img.setFitWidth(128);
+                img.setFitHeight(128);
+                imgKorisnik.setGraphic(img);
             }
             if (newKorisnik == null) {
+                System.out.println("bbb");
                 fldIme.setText("");
                 fldPrezime.setText("");
                 fldEmail.setText("");
                 fldUsername.setText("");
                 fldPassword.setText("");
+
+                ImageView img = new ImageView("/img/face-smile.png");
+                img.setFitWidth(128);
+                img.setFitHeight(128);
+                imgKorisnik.setGraphic(img);
             } else {
                 fldIme.textProperty().bindBidirectional(newKorisnik.imeProperty());
                 fldPrezime.textProperty().bindBidirectional(newKorisnik.prezimeProperty());
                 fldEmail.textProperty().bindBidirectional(newKorisnik.emailProperty());
                 fldUsername.textProperty().bindBidirectional(newKorisnik.usernameProperty());
                 fldPassword.textProperty().bindBidirectional(newKorisnik.passwordProperty());
+
+                ImageView img = new ImageView(newKorisnik.getSlika());
+                img.setFitWidth(128);
+                img.setFitHeight(128);
+                imgKorisnik.setGraphic(img);
             }
         });
 
@@ -236,5 +255,31 @@ public class KorisnikController {
         labelEmail.setText(resourceBundle.getString("email"));
         labelUsername.setText(resourceBundle.getString("username"));
         labelPassword.setText(resourceBundle.getString("password"));
+    }
+
+    public void imageAction(ActionEvent actionEvent) {
+        try {
+            Stage stage = new Stage();
+            PretragaController ctrl = new PretragaController();
+            ctrl.setKorisnik(model.getTrenutniKorisnik());
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/pretraga.fxml"));
+            loader.setController(ctrl);
+            Parent root = loader.load();
+            stage.setTitle("Pretraga slike");
+            stage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
+            stage.show();
+
+            stage.setOnHidden(windowEvent -> {
+                if (model.getTrenutniKorisnik() != null) {
+                    ImageView img = new ImageView(model.getTrenutniKorisnik().getSlika());
+                    img.setFitWidth(128);
+                    img.setFitHeight(128);
+                    imgKorisnik.setGraphic(img);
+                }
+            });
+            //primaryStage.setResizable(false);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 }

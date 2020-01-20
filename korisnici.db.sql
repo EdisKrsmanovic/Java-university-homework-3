@@ -5,7 +5,7 @@ create table korisnik(
     email varchar(50),
     username varchar(50),
     password varchar(50),
-    url varchar(100)
+    slika varchar(100)
 );
 
 insert into korisnik values(null, 'Vedran', 'Ljubović', 'vljubovic@etf.unsa.ba', 'vedranlj', 'test', '/img/face-smile.png');

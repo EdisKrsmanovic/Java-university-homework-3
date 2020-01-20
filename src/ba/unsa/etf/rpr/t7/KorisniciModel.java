@@ -5,7 +5,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.io.*;
-import java.lang.ref.Cleaner;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.*;
@@ -98,7 +97,7 @@ public class KorisniciModel {
             rs = stmt.executeQuery();
 
             while (rs.next()) {
-                Korisnik korisnik = new Korisnik(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6));
+                Korisnik korisnik = new Korisnik(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7));
                 noviKorisnici.add(korisnik);
             }
         } catch (SQLException e) {
@@ -109,15 +108,16 @@ public class KorisniciModel {
 
     private void updateuj(Korisnik korisnik) {
         try {
-            PreparedStatement stmt = konekcija.prepareStatement("UPDATE korisnik SET ime = ?, prezime = ?, email = ?, username = ?, password = ? WHERE id = ?");
-
+            PreparedStatement stmt = konekcija.prepareStatement("UPDATE korisnik SET ime = ?, prezime = ?, email = ?, username = ?, password = ?, slika = ? WHERE id = ?");
             stmt.setString(1, korisnik.getIme());
             stmt.setString(2, korisnik.getPrezime());
             stmt.setString(3, korisnik.getEmail());
             stmt.setString(4, korisnik.getUsername());
             stmt.setString(5, korisnik.getPassword());
             stmt.setInt(6, korisnik.getId());
-            stmt.executeUpdate();
+            stmt.setString(7, korisnik.getSlika());
+            stmt.execute();
+            stmt.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
