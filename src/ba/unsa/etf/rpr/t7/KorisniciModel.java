@@ -107,19 +107,40 @@ public class KorisniciModel {
     }
 
     private void updateuj(Korisnik korisnik) {
-        try {
-            PreparedStatement stmt = konekcija.prepareStatement("UPDATE korisnik SET ime = ?, prezime = ?, email = ?, username = ?, password = ?, slika = ? WHERE id = ?");
-            stmt.setString(1, korisnik.getIme());
-            stmt.setString(2, korisnik.getPrezime());
-            stmt.setString(3, korisnik.getEmail());
-            stmt.setString(4, korisnik.getUsername());
-            stmt.setString(5, korisnik.getPassword());
-            stmt.setString(6, korisnik.getSlika());
-            stmt.setInt(7, korisnik.getId());
-            stmt.execute();
-            stmt.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
+        if(korisnik.getId() == null) {
+            try {
+                PreparedStatement stmt = konekcija.prepareStatement("INSERT INTO korisnik VALUES(null,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+                stmt.setString(1, korisnik.getIme());
+                stmt.setString(2, korisnik.getPrezime());
+                stmt.setString(3, korisnik.getEmail());
+                stmt.setString(4, korisnik.getUsername());
+                stmt.setString(5, korisnik.getPassword());
+                stmt.setString(6, korisnik.getSlika());
+                stmt.execute();
+                ResultSet rs = stmt.getGeneratedKeys();
+                if (rs.next()) {
+                    korisnik.setId(rs.getInt(1));
+                }
+                stmt.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        else {
+            try {
+                PreparedStatement stmt = konekcija.prepareStatement("UPDATE korisnik SET ime = ?, prezime = ?, email = ?, username = ?, password = ?, slika = ? WHERE id = ?");
+                stmt.setString(1, korisnik.getIme());
+                stmt.setString(2, korisnik.getPrezime());
+                stmt.setString(3, korisnik.getEmail());
+                stmt.setString(4, korisnik.getUsername());
+                stmt.setString(5, korisnik.getPassword());
+                stmt.setString(6, korisnik.getSlika());
+                stmt.setInt(7, korisnik.getId());
+                stmt.execute();
+                stmt.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 

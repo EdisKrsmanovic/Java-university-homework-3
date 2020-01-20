@@ -1,14 +1,14 @@
 package ba.unsa.etf.rpr.t7;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -30,80 +30,68 @@ public class PretragaController {
 
     @FXML
     public void initialize() {
-//        Text value = new Text("blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla");
-//        value.setWrappingWidth(500);
-//        scrImgPane.setContent(value);
-//        scrImgPane.setFitToWidth(true);
+        scrImgPane.setFitToHeight(true);
+        scrImgPane.setFitToWidth(true);
     }
 
     public void searchAction() {
-        //threading, na svaku novu sliku staviti listener i ako se klikne staviti imageurl na nju, te skinuti sliku u img folder?
         pretrazi(textSearch.getText());
     }
 
     private void pretrazi(String text) {
-        try {
-            URL giphy = new URL(String.format("https://api.giphy.com/v1/gifs/search?api_key=oNpc1jLCGwTMlUOrBdl9BdSD439AbTXl&q=%s&limit=25&offset=0&rating=G&lang=en", text));
-            URLConnection yc = giphy.openConnection();
-            BufferedReader in = new BufferedReader(
-                    new InputStreamReader(
-                            yc.getInputStream()));
-            String inputLine;
+        new Thread(() -> {
+            try {
+                URL giphy = new URL(String.format("https://api.giphy.com/v1/gifs/search?api_key=oNpc1jLCGwTMlUOrBdl9BdSD439AbTXl&q=%s&limit=25&offset=0&rating=R&lang=en", text));
+                URLConnection yc = giphy.openConnection();
+                BufferedReader in = new BufferedReader(
+                        new InputStreamReader(
+                                yc.getInputStream()));
+                String inputLine;
 
-            StringBuilder json = new StringBuilder();
-            while ((inputLine = in.readLine()) != null) {
-                json.append(inputLine);
-            }
-            in.close();
-
-
-            JSONObject obj = new JSONObject(json.toString());
-
-            JSONArray items = obj.getJSONArray("data");
-
-            FlowPane flow = new FlowPane();
-            flow.setPadding(new Insets(5, 0, 5, 0));
-            flow.setVgap(4);
-            flow.setHgap(4);
-            flow.setPrefWrapLength(350);
-
-            ImageView pages[] = new ImageView[items.length()];
-            for (int i = 0; i < items.length(); i++) {
-
-                int finalI = i;
-                Thread thread = new Thread(new Runnable() {
-                    private int id = finalI;
+                StringBuilder json = new StringBuilder();
+                while ((inputLine = in.readLine()) != null) {
+                    json.append(inputLine);
+                }
+                in.close();
 
 
-                    @Override
-                    public void run() {
-                        JSONObject slike = items.getJSONObject(id);
-                        String jsonSlika = slike.getJSONObject("images").get("480w_still").toString();
-                        JSONObject slika = new JSONObject(jsonSlika);
-//                System.out.println(slika.get("url").toString().replace("?", "\n").split("\n")[0].replaceAll("media[0-9]", "i"));
-                        ImageView imageView = new ImageView(slika.get("url").toString().replace("?", "\n").split("\n")[0].replaceAll("media[0-9]", "i"));
-                        imageView.setFitWidth(128);
-                        imageView.setFitHeight(128);
-                        imageView.setOnMouseClicked(e -> {
-                            ImageView selectedImage = (ImageView) e.getSource();
-                            imageUrl = selectedImage.getImage().getUrl();
-                        });
-                        pages[id] = imageView;
-                        flow.getChildren().add(pages[id]);
+                JSONObject obj = new JSONObject(json.toString());
+
+                JSONArray items = obj.getJSONArray("data");
+
+                FlowPane flow = new FlowPane();
+                flow.setPadding(new Insets(5, 0, 5, 0));
+                flow.setVgap(4);
+                flow.setHgap(4);
+
+                for (int i = 0; i < items.length(); i++) {
+
+                    JSONObject slike = items.getJSONObject(i);
+                    String jsonSlika = slike.getJSONObject("images").get("original_still").toString();
+                    JSONObject slika = new JSONObject(jsonSlika);
+
+                    ImageView imageView = new ImageView(slika.get("url").toString().replace("?", "\n").split("\n")[0].replaceAll("media[0-9]", "i"));
+                    imageView.setFitWidth(128);
+                    imageView.setFitHeight(128);
+
+                    Button button = new Button();
+                    button.setGraphic(imageView);
+                    button.setOnMouseClicked(e -> {
+                        Button selectedImage = (Button) e.getSource();
+                        ImageView img = (ImageView) selectedImage.getGraphic();
+                        imageUrl = img.getImage().getUrl();
+                    });
+                    Platform.runLater(() -> {
+                        flow.getChildren().add(button);
                         scrImgPane.setContent(flow);
-                    }
-                });
-
-                thread.run();
-
-
+                    });
+                }
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-            scrImgPane.setFitToWidth(true);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        }).start();
     }
 
     public void okAction() {
@@ -121,9 +109,6 @@ public class PretragaController {
     }
 
     public void cancelAction() {
-
-        //treba ponistiti promjene i da se slika ne promijeni
-
         Stage stage = (Stage) textSearch.getScene().getWindow();
         stage.close();
     }

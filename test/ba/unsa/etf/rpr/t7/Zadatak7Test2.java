@@ -52,6 +52,9 @@ public class Zadatak7Test2 {
         Button imgKorisnik = robot.lookup("#imgKorisnik").queryAs(Button.class);
         assertNotNull(imgKorisnik);
 
+        // Klikamo na nekog korisnika jer nema smisla stavljati sliku nepostojećem korisniku
+        robot.clickOn("Sijerčić Tarik");
+
         // Klikamo na dugme da vidimo hoće li se otvoriti dijalog
         robot.clickOn("#imgKorisnik");
         robot.lookup("Cancel").tryQuery().isPresent();

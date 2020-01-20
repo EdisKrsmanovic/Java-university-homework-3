@@ -80,10 +80,12 @@ public class KorisnikController {
                 fldUsername.textProperty().unbindBidirectional(oldKorisnik.usernameProperty());
                 fldPassword.textProperty().unbindBidirectional(oldKorisnik.passwordProperty());
 
-                ImageView img = new ImageView(newKorisnik.getSlika());
-                img.setFitWidth(128);
-                img.setFitHeight(128);
-                imgKorisnik.setGraphic(img);
+                if (newKorisnik.getSlika() != null) {
+                    ImageView img = new ImageView(newKorisnik.getSlika());
+                    img.setFitWidth(128);
+                    img.setFitHeight(128);
+                    imgKorisnik.setGraphic(img);
+                }
             }
             if (newKorisnik == null) {
                 fldIme.setText("");
@@ -103,10 +105,18 @@ public class KorisnikController {
                 fldUsername.textProperty().bindBidirectional(newKorisnik.usernameProperty());
                 fldPassword.textProperty().bindBidirectional(newKorisnik.passwordProperty());
 
-//                ImageView img = new ImageView(newKorisnik.getSlika());
-//                img.setFitWidth(128);
-//                img.setFitHeight(128);
-//                imgKorisnik.setGraphic(img);
+                if(newKorisnik.getSlika() != null) {
+                    ImageView img = new ImageView(newKorisnik.getSlika());
+                    img.setFitWidth(128);
+                    img.setFitHeight(128);
+                    imgKorisnik.setGraphic(img);
+                }
+                else {
+                    ImageView img = new ImageView("/img/face-smile.png");
+                    img.setFitWidth(128);
+                    img.setFitHeight(128);
+                    imgKorisnik.setGraphic(img);
+                }
             }
         });
 
@@ -257,28 +267,35 @@ public class KorisnikController {
     }
 
     public void imageAction(ActionEvent actionEvent) {
-        try {
-            Stage stage = new Stage();
-            PretragaController ctrl = new PretragaController();
-            ctrl.setKorisnik(model.getTrenutniKorisnik());
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/pretraga.fxml"));
-            loader.setController(ctrl);
-            Parent root = loader.load();
-            stage.setTitle("Pretraga slike");
-            stage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
-            stage.show();
+        if (model.getTrenutniKorisnik() == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Nijedan korisnik nije izabran");
+            alert.setHeaderText("Niste izabrali korisnika kojeg želite");
+            alert.setContentText("Dodajte novog korisnika ili odaberite vec nekog postojeceg");
+            alert.showAndWait();
+        } else {
+            try {
+                Stage stage = new Stage();
+                PretragaController ctrl = new PretragaController();
+                ctrl.setKorisnik(model.getTrenutniKorisnik());
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/pretraga.fxml"));
+                loader.setController(ctrl);
+                Parent root = loader.load();
+                stage.setTitle("Pretraga slike");
+                stage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
+                stage.show();
 
-            stage.setOnHidden(windowEvent -> {
-                if (model.getTrenutniKorisnik() != null) {
-                    ImageView img = new ImageView(model.getTrenutniKorisnik().getSlika());
-                    img.setFitWidth(128);
-                    img.setFitHeight(128);
-                    imgKorisnik.setGraphic(img);
-                }
-            });
-            //primaryStage.setResizable(false);
-        } catch (IOException ex) {
-            ex.printStackTrace();
+                stage.setOnHidden(windowEvent -> {
+                    if (model.getTrenutniKorisnik() != null) {
+                        ImageView img = new ImageView(model.getTrenutniKorisnik().getSlika());
+                        img.setFitWidth(128);
+                        img.setFitHeight(128);
+                        imgKorisnik.setGraphic(img);
+                    }
+                });
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
         }
     }
 }

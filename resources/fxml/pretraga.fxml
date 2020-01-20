@@ -1,19 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <GridPane prefHeight="400.0" prefWidth="600.0">
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="654.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+      <GridPane prefHeight="400.0" prefWidth="600.0" HBox.hgrow="ALWAYS">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="371.0" minWidth="10.0" prefWidth="339.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="284.0" minWidth="10.0" prefWidth="241.0" />
+          <ColumnConstraints hgrow="ALWAYS" maxWidth="99999" minWidth="10.0" prefWidth="99999" />
+          <ColumnConstraints hgrow="ALWAYS" maxWidth="99999" minWidth="10.0" prefWidth="99999" />
         </columnConstraints>
         <rowConstraints>
-          <RowConstraints maxHeight="194.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="360.0" minHeight="10.0" prefHeight="360.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="194.0" minHeight="50.0" prefHeight="40.0" vgrow="ALWAYS" />
+          <RowConstraints maxHeight="99999" minHeight="10.0" prefHeight="999990" vgrow="ALWAYS" />
         </rowConstraints>
          <padding>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -27,12 +33,11 @@
                   <Button mnemonicParsing="false" onAction="#cancelAction" text="Cancel" />
               </buttons>
             </ButtonBar>
-            <ScrollPane fx:id="scrImgPane" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="1">
+            <ScrollPane fx:id="scrImgPane" hbarPolicy="NEVER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="1">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
               </content>
             </ScrollPane>
          </children>
       </GridPane>
-   </children>
-</AnchorPane>
+    </children>
+    </HBox>
