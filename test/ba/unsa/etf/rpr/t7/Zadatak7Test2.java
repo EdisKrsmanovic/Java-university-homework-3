@@ -53,7 +53,7 @@ public class Zadatak7Test2 {
         assertNotNull(imgKorisnik);
 
 //        // Klikamo na nekog korisnika jer nema smisla stavljati sliku nepostojećem korisniku
-//        robot.clickOn("Sijerčić Tarik");
+        robot.clickOn("Sijerčić Tarik");
 
         // Klikamo na dugme da vidimo hoće li se otvoriti dijalog
         robot.clickOn("#imgKorisnik");
