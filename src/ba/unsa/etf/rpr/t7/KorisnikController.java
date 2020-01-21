@@ -267,13 +267,13 @@ public class KorisnikController {
     }
 
     public void imageAction(ActionEvent actionEvent) {
-        if (model.getTrenutniKorisnik() == null) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Nijedan korisnik nije izabran");
-            alert.setHeaderText("Niste izabrali korisnika kojeg želite");
-            alert.setContentText("Dodajte novog korisnika ili odaberite vec nekog postojeceg");
-            alert.showAndWait();
-        } else {
+//        if (model.getTrenutniKorisnik() == null) {
+//            Alert alert = new Alert(Alert.AlertType.ERROR);
+//            alert.setTitle("Nijedan korisnik nije izabran");
+//            alert.setHeaderText("Niste izabrali korisnika kojeg želite");
+//            alert.setContentText("Dodajte novog korisnika ili odaberite vec nekog postojeceg");
+//            alert.showAndWait();
+//        } else {
             try {
                 Stage stage = new Stage();
                 PretragaController ctrl = new PretragaController();
@@ -296,6 +296,6 @@ public class KorisnikController {
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
-        }
+//        }
     }
 }

@@ -7,6 +7,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
@@ -65,12 +66,7 @@ public class PretragaController {
                 flow.setHgap(4);
 
                 for (int i = 0; i < items.length(); i++) {
-
-                    JSONObject slike = items.getJSONObject(i);
-                    String jsonSlika = slike.getJSONObject("images").get("original_still").toString();
-                    JSONObject slika = new JSONObject(jsonSlika);
-
-                    ImageView imageView = new ImageView(slika.get("url").toString().replace("?", "\n").split("\n")[0].replaceAll("media[0-9]", "i"));
+                    ImageView imageView = new ImageView("/img/loading.gif");
                     imageView.setFitWidth(128);
                     imageView.setFitHeight(128);
 
@@ -85,6 +81,14 @@ public class PretragaController {
                         flow.getChildren().add(button);
                         scrImgPane.setContent(flow);
                     });
+
+                    JSONObject slike = items.getJSONObject(i);
+                    String jsonSlika = slike.getJSONObject("images").get("original_still").toString();
+                    JSONObject slika = new JSONObject(jsonSlika);
+
+                    imageView.setImage(new Image(slika.get("url").toString().replace("?", "\n").split("\n")[0].replaceAll("media[0-9]", "i")));
+                    imageView.setFitWidth(128);
+                    imageView.setFitHeight(128);
                 }
             } catch (MalformedURLException e) {
                 e.printStackTrace();
@@ -102,7 +106,7 @@ public class PretragaController {
             alert.setContentText("Unesite pretragu a zatim izaberite sliku, ili kliknite na Cancel ako ne zelite novu sliku");
             alert.showAndWait();
         } else {
-            korisnik.setSlika(imageUrl);
+            if(korisnik != null) korisnik.setSlika(imageUrl);
             Stage stage = (Stage) textSearch.getScene().getWindow();
             stage.close();
         }
