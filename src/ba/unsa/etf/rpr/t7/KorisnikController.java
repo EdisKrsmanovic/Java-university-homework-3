@@ -53,6 +53,8 @@ public class KorisnikController {
     public Label labelUsername;
     public Label labelPassword;
 
+    private PretragaController pretragaController;
+
     private KorisniciModel model;
 
     public KorisnikController(KorisniciModel model) {
@@ -244,6 +246,7 @@ public class KorisnikController {
     }
 
     private void changeLanguage() {
+        pretragaController.refreshNazive();
         ResourceBundle resourceBundle = ResourceBundle.getBundle("language", Locale.getDefault());
 
         btnObrisi.setText(resourceBundle.getString("remove"));
@@ -284,6 +287,7 @@ public class KorisnikController {
                 stage.setTitle("Pretraga slike");
                 stage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
                 stage.show();
+                pretragaController = ctrl;
 
                 stage.setOnHidden(windowEvent -> {
                     if (model.getTrenutniKorisnik() != null) {
@@ -291,6 +295,7 @@ public class KorisnikController {
                         img.setFitWidth(128);
                         img.setFitHeight(128);
                         imgKorisnik.setGraphic(img);
+                        pretragaController = null;
                     }
                 });
             } catch (IOException ex) {

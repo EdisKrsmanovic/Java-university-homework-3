@@ -28,9 +28,9 @@
             <TextField fx:id="textSearch" prefWidth="333.0" />
             <ButtonBar buttonMinWidth="20.0" prefHeight="40.0" prefWidth="200.0" GridPane.columnIndex="1">
               <buttons>
-                <Button mnemonicParsing="false" onAction="#searchAction" text="Search" />
+                <Button fx:id="btnSearch" mnemonicParsing="false" onAction="#searchAction" prefHeight="26.0" prefWidth="146.0" text="\%search" />
                   <Button mnemonicParsing="false" onAction="#okAction" prefHeight="26.0" text="Ok" />
-                  <Button mnemonicParsing="false" onAction="#cancelAction" text="Cancel" />
+                  <Button fx:id="btnCancel" mnemonicParsing="false" onAction="#cancelAction" text="\%cancel" />
               </buttons>
             </ButtonBar>
             <ScrollPane fx:id="scrImgPane" hbarPolicy="NEVER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="1">

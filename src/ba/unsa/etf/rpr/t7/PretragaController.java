@@ -20,12 +20,16 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 public class PretragaController {
     public Korisnik korisnik;
 
     public ScrollPane scrImgPane;
     public TextField textSearch;
+    public Button btnSearch;
+    public Button btnCancel;
 
     private String imageUrl = null;
 
@@ -33,6 +37,13 @@ public class PretragaController {
     public void initialize() {
         scrImgPane.setFitToHeight(true);
         scrImgPane.setFitToWidth(true);
+        refreshNazive();
+    }
+
+    public void refreshNazive() {
+        ResourceBundle resourceBundle = ResourceBundle.getBundle("language", Locale.getDefault());
+        btnSearch.setText(resourceBundle.getString("search"));
+        btnCancel.setText(resourceBundle.getString("cancel"));
     }
 
     public void searchAction() {
