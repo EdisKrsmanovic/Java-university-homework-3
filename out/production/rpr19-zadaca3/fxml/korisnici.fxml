@@ -83,20 +83,20 @@
               <menus>
                   <Menu fx:id="menuFile" mnemonicParsing="false" text="%menu.file">
                       <items>
-                          <MenuItem fx:id="fileSave" mnemonicParsing="false" onAction="#saveAction" text="%file.save" />
-                          <MenuItem fx:id="filePrint" mnemonicParsing="false" onAction="#printAction" text="%file.print" />
-                  <Menu fx:id="fileLanguage" mnemonicParsing="false" text="%file.language">
+                          <MenuItem fx:id="fileSave" mnemonicParsing="true" onAction="#saveAction" text="%file.save" />
+                          <MenuItem fx:id="filePrint" mnemonicParsing="true" onAction="#printAction" text="%file.print" />
+                  <Menu fx:id="fileLanguage" mnemonicParsing="true" text="%file.language">
                     <items>
-                      <MenuItem mnemonicParsing="false" onAction="#bosanskiAction" text="Bosanski" />
-                        <MenuItem mnemonicParsing="false" onAction="#englishAction" text="English" />
+                      <MenuItem mnemonicParsing="true" onAction="#bosanskiAction" text="Bosanski" />
+                        <MenuItem mnemonicParsing="true" onAction="#englishAction" text="English" />
                     </items>
                   </Menu>
-                          <MenuItem fx:id="fileExit" mnemonicParsing="false" onAction="#exitAction" text="%file.exit" />
+                          <MenuItem fx:id="fileExit" mnemonicParsing="true" onAction="#exitAction" text="%file.exit" />
                       </items>
                   </Menu>
-                  <Menu fx:id="menuHelp" mnemonicParsing="false" text="%menu.help">
+                  <Menu fx:id="menuHelp" mnemonicParsing="true" text="%menu.help">
                       <items>
-                          <MenuItem fx:id="helpAbout" mnemonicParsing="false" onAction="#aboutAction" text="%help.about" />
+                          <MenuItem fx:id="helpAbout" mnemonicParsing="true" onAction="#aboutAction" text="%help.about" />
                       </items>
                   </Menu>
               </menus>

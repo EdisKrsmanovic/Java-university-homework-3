@@ -246,7 +246,7 @@ public class KorisnikController {
     }
 
     private void changeLanguage() {
-        pretragaController.refreshNazive();
+        if(pretragaController != null) pretragaController.refreshNazive();
         ResourceBundle resourceBundle = ResourceBundle.getBundle("language", Locale.getDefault());
 
         btnObrisi.setText(resourceBundle.getString("remove"));
