@@ -87,8 +87,8 @@
                           <MenuItem fx:id="filePrint" mnemonicParsing="true" onAction="#printAction" text="%file.print" />
                   <Menu fx:id="fileLanguage" mnemonicParsing="true" text="%file.language">
                     <items>
-                      <MenuItem mnemonicParsing="true" onAction="#bosanskiAction" text="Bosanski" />
-                        <MenuItem mnemonicParsing="true" onAction="#englishAction" text="English" />
+                      <MenuItem mnemonicParsing="true" onAction="#bosanskiAction" text="%bosanski" />
+                        <MenuItem mnemonicParsing="true" onAction="#englishAction" text="%english" />
                     </items>
                   </Menu>
                           <MenuItem fx:id="fileExit" mnemonicParsing="true" onAction="#exitAction" text="%file.exit" />
